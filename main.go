@@ -38,12 +38,13 @@ func main() {
 
 	fmt.Printf("\n Checking %d links...\n\n", len(normalized))
 
-	for _, link := range normalized {
-		result := checker.CheckLink(link)
+	statuses := checker.CheckLinksConcurrently(normalized)
+
+	for _, result := range statuses {
 		if result.Alive {
-			fmt.Printf("✅ %s [%s]\n", result.URL, result.Status)
+			fmt.Printf("✅ %s (%s)\n", result.URL, result.Status)
 		} else {
-			fmt.Printf("❌ %s [%s]\n", result.URL, result.Status)
+			fmt.Printf("❌ %s (%s)\n", result.URL, result.Status)
 		}
 	}
 }
